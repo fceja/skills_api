@@ -1,8 +1,6 @@
-from fastapi import FastAPI
+from api import api
 
-api = FastAPI()
+if __name__ == "__main__":
+    import uvicorn
 
-
-@api.get("/")
-def read_root():
-    return {"message": "Root endpoint"}
+    uvicorn.run(api, host="0.0.0.0", port=8000)
