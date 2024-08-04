@@ -7,12 +7,9 @@ from api.models.user_language_model import user_language_model
 Base = declarative_base()
 
 
-class User(Base):
-    __tablename__ = "users"
+class Language(Base):
+    __tablename__ = "languages"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
-    email = Column(String, unique=True, index=True)
-    languages = relationship(
-        "Language", secondary=user_language_model, back_populates="users"
-    )
+    users = relationship("User", secondary=user_language_model, back_populates="users")
