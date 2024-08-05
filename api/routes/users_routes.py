@@ -3,8 +3,9 @@ from sqlalchemy.orm import Session
 
 from api.database import get_db
 from api.models.user_model import User
-from api.schemas.user_schema import UserCreate, UserRead
+from api.schemas.user_schema import UserCreate
 
+# init router
 router = APIRouter()
 
 
