@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.user_model import User
+from app.models.language_model import Language
 from app.schemas.user_schema import UserCreate
 
 # init router
@@ -13,6 +14,11 @@ router = APIRouter()
 @router.post("/")
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = User(name=user.name, email=user.email)
+    for id in user.language_ids:
+        language = db.query(Language).filter(Language.id == id).first()
+        if language:
+            db_user.languages.append(language)
+
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
