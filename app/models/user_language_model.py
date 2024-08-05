@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Table, ForeignKey
 
-from api.models.base import Base
+from app.models.base import Base
 
 # associative table
 user_language = Table(

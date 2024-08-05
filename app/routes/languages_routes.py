@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from api.database import get_db
-from api.models.language_model import Language
-from api.schemas.language_schema import LanguageCreate
+from app.database import get_db
+from app.models.language_model import Language
+from app.schemas.language_schema import LanguageCreate
 
 # init router
 router = APIRouter()

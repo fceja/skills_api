@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from api.models.base import Base
-from api.models import user_model, language_model, user_language_model
+from app.models.base import Base
+from app.models import user_model, language_model, user_language_model
 
 # init db
 DATABASE_URL = "sqlite:///./skills.db"
