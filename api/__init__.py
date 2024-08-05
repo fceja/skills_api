@@ -1,11 +1,6 @@
 from fastapi import FastAPI
 
-from api.database import engine
-from api.models.base import Base
 from api.routes import languages_routes, users_routes
-
-# bind db models
-Base.metadata.create_all(bind=engine)
 
 # init api
 api = FastAPI()

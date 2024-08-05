@@ -1,9 +1,9 @@
-from sqlalchemy import Column, Integer, String, Table, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, Table, ForeignKey
 
-Base = declarative_base()
+from api.models.base import Base
 
-user_language_model = Table(
+# associative table
+user_language = Table(
     "user_language",
     Base.metadata,
     Column("user_id", Integer, ForeignKey("users.id")),
