@@ -4,8 +4,8 @@ import uvicorn
 from app.routes import (
     languages_routes,
     frontend_tools_routes,
+    user_skill_routes,
     users_routes,
-    user_language_routes,
 )
 
 # init app
@@ -18,7 +18,7 @@ app.include_router(
 )
 app.include_router(users_routes.router, prefix="/users", tags=["users"])
 app.include_router(
-    user_language_routes.router, prefix="/user-languages", tags=["user-languages"]
+    user_skill_routes.router, prefix="/user-skills", tags=["user-skills"]
 )
 
 

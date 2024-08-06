@@ -10,7 +10,7 @@ router = APIRouter()
 
 # region - create operations
 @router.post("/")
-def get_frontend_tools(
+def create_frontend_tools(
     frontend_tool: FrontendToolsCreate, db: Session = Depends(get_db)
 ):
     exists = (

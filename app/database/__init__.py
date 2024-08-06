@@ -4,8 +4,8 @@ from sqlalchemy.orm import sessionmaker
 from app.models import (
     user_model,
     language_model,
-    user_language_model,
     frontend_tools_model,
+    user_skill_model,
 )
 
 from app.models.base import Base
