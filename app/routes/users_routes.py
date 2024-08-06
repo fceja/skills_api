@@ -11,8 +11,8 @@ router = APIRouter()
 
 # region - create operations
 @router.post("/")
-def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    db_user = User(name=user.name, email=user.email)
+def create_user(user_data: UserCreate, db: Session = Depends(get_db)):
+    db_user = User(user_data)
 
     db.add(db_user)
     db.commit()

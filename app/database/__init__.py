@@ -7,8 +7,8 @@ from app.models import (
     frontend_tools_model,
     user_skill_model,
 )
-
 from app.models.base import Base
+from app.database.seed_data import seed_data
 
 # init db
 DATABASE_URL = "sqlite:///./skills.db"
@@ -18,6 +18,13 @@ engine = create_engine(DATABASE_URL, connect_args=CONNECT_ARGS)
 session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base.metadata.create_all(bind=engine)
+
+# seed db data
+try:
+    db = session_local()
+    seed_data(db)
+finally:
+    db.close()
 
 
 def get_db():

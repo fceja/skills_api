@@ -11,8 +11,8 @@ router = APIRouter()
 
 # region - create operations
 @router.post("/")
-def create_languages(language: LanguageCreate, db: Session = Depends(get_db)):
-    db_language = Language(name=language.name)
+def create_languages(language_data: LanguageCreate, db: Session = Depends(get_db)):
+    db_language = Language(language_data)
     db.add(db_language)
     db.commit()
     db.refresh(db_language)

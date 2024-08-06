@@ -8,3 +8,6 @@ class Language(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
+
+    def __init__(self, language_data):
+        self.name = language_data.name
