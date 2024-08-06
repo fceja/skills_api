@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 
 from app.models.user_model import User
+from app.models.frontend_tools_model import FrontendTool
 from app.models.language_model import Language
 from app.models.user_skill_model import UserSkill
 from app.schemas.user_skill_schema import UserSkillCreate
@@ -32,6 +33,45 @@ def get_user_skills(start: int = 0, limit: int = 10, db: Session = Depends(get_d
     results = db.query(UserSkill).offset(start).limit(limit).all()
 
     return {"success": True, "user_skills": results}
+
+
+@router.get("/users/{user_id}")
+def get_user_skills_by_user_id(user_id: int, db: Session = Depends(get_db)):
+    user = (
+        db.query(User)
+        .filter(User.id == user_id)
+        .join(UserSkill, User.id == UserSkill.user_id)
+        .outerjoin(Language, UserSkill.language_id == Language.id)
+        .outerjoin(FrontendTool, UserSkill.frontend_tool_id == FrontendTool.id)
+        .first()
+    )
+
+    if not user:
+        return {"success": False, "message": "User not found."}
+
+    lang_results = [
+        skill.language.name
+        for skill in user.skills
+        if skill.language and not skill.frontend_tool
+    ]
+    fe_results = [
+        skill.frontend_tool.name for skill in user.skills if skill.frontend_tool
+    ]
+
+    return {
+        "success": True,
+        "user-skills": {
+            "user": {
+                "id": user_id,
+                "name": user.name,
+                "email": user.email,
+            },
+            "skills": {
+                "languages": lang_results,
+                "frontend_tools": fe_results,
+            },
+        },
+    }
 
 
 # endregion - read operations

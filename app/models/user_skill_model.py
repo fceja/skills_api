@@ -1,4 +1,5 @@
 from sqlalchemy import Column, ForeignKey, Integer
+from sqlalchemy.orm import relationship
 
 from app.models.base import Base
 
@@ -12,6 +13,10 @@ class UserSkill(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     language_id = Column(Integer, ForeignKey("languages.id"))
     frontend_tool_id = Column(Integer, ForeignKey("frontend_tools.id"), nullable=True)
+
+    user = relationship("User", back_populates="skills")
+    language = relationship("Language")
+    frontend_tool = relationship("FrontendTool")
 
     def __init__(self, user_skills):
         self.user_id = user_skills.user_id
