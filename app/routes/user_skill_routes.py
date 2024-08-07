@@ -55,14 +55,12 @@ def get_user_skills_by_user_id(user_id: int, db: Session = Depends(get_db)):
     if not user:
         return {"success": False, "message": "User not found."}
 
-    lang_results = [
-        skill.language.name
-        for skill in user.skills
-        if skill.language and not skill.frontend_tool
-    ]
+    lang_results = [skill.language.name for skill in user.skills if skill.language]
+
     fe_results = [
         skill.frontend_tool.name for skill in user.skills if skill.frontend_tool
     ]
+
     be_results = [
         skill.backend_tool.name for skill in user.skills if skill.backend_tool
     ]
