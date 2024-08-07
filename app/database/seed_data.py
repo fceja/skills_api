@@ -119,7 +119,6 @@ def seed_data(db: Session):
                 skills_data["frontend_tool_id"] = i
             else:
                 skills_data["frontend_tool_id"] = None
-            print(f"skills_data -> {skills_data}")
 
             db_skills = UserSkillCreate(
                 user_id=user_id,
