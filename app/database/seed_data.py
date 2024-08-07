@@ -1,11 +1,12 @@
-from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from app.models.language_model import Language
+from app.models.backend_tools_model import BackendTool
 from app.models.frontend_tools_model import FrontendTool
+from app.models.language_model import Language
 from app.models.user_model import User
-from app.schemas.language_schema import LanguageCreate
+from app.schemas.backend_tool_schema import BackendToolCreate
 from app.schemas.frontend_tool_schema import FrontendToolCreate
+from app.schemas.language_schema import LanguageCreate
 from app.schemas.user_schema import UserCreate
 
 
@@ -45,4 +46,15 @@ def seed_data(db: Session):
             frontend_tools.append(fe_tool)
 
         db.add_all(frontend_tools)
+        db.commit()
+
+    if db.query(BackendTool).count() == 0:
+        backend_tools = []
+
+        for user in ["fastapi", "node", "express"]:
+            be_tool_data = BackendToolCreate(name=user)
+            be_tool = BackendTool(be_tool_data)
+            backend_tools.append(be_tool)
+
+        db.add_all(backend_tools)
         db.commit()

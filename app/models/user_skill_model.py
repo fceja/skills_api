@@ -13,12 +13,15 @@ class UserSkill(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     language_id = Column(Integer, ForeignKey("languages.id"))
     frontend_tool_id = Column(Integer, ForeignKey("frontend_tools.id"), nullable=True)
+    backend_tool_id = Column(Integer, ForeignKey("backend_tools.id"), nullable=True)
 
     user = relationship("User", back_populates="skills")
     language = relationship("Language")
     frontend_tool = relationship("FrontendTool")
+    backend_tool = relationship("BackendTool")
 
     def __init__(self, user_skills):
         self.user_id = user_skills.user_id
         self.language_id = user_skills.language_id
         self.frontend_tool_id = user_skills.frontend_tool_id
+        self.backend_tool_id = user_skills.backend_tool_id

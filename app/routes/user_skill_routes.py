@@ -3,9 +3,10 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 
-from app.models.user_model import User
+from app.models.backend_tools_model import BackendTool
 from app.models.frontend_tools_model import FrontendTool
 from app.models.language_model import Language
+from app.models.user_model import User
 from app.models.user_skill_model import UserSkill
 from app.schemas.user_skill_schema import UserSkillCreate
 
@@ -42,6 +43,7 @@ def get_user_skills_by_user_id(user_id: int, db: Session = Depends(get_db)):
         .filter(User.id == user_id)
         .join(UserSkill, User.id == UserSkill.user_id)
         .outerjoin(Language, UserSkill.language_id == Language.id)
+        .outerjoin(BackendTool, UserSkill.backend_tool_id == BackendTool.id)
         .outerjoin(FrontendTool, UserSkill.frontend_tool_id == FrontendTool.id)
         .first()
     )
@@ -57,6 +59,9 @@ def get_user_skills_by_user_id(user_id: int, db: Session = Depends(get_db)):
     fe_results = [
         skill.frontend_tool.name for skill in user.skills if skill.frontend_tool
     ]
+    be_results = [
+        skill.backend_tool.name for skill in user.skills if skill.backend_tool
+    ]
 
     return {
         "success": True,
@@ -69,6 +74,7 @@ def get_user_skills_by_user_id(user_id: int, db: Session = Depends(get_db)):
             "skills": {
                 "languages": lang_results,
                 "frontend_tools": fe_results,
+                "backend_tools": be_results,
             },
         },
     }
