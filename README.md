@@ -21,3 +21,11 @@ A simple API using Python and the FastAPI library.
    ```
    uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
    ```
+
+## Endpoint
+```
+localhost:8000/user-skills/users/1
+```
+Response
+
+<img src="screenshots/Screenshot.png" alt="Screenshot image" width="700"/>
