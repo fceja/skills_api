@@ -5,6 +5,7 @@ from app.database import get_db
 
 from app.models.backend_tools_model import BackendTool
 from app.models.frontend_tools_model import FrontendTool
+from app.models.database_model import Database
 from app.models.language_model import Language
 from app.models.user_model import User
 from app.models.user_skill_model import UserSkill
@@ -45,6 +46,7 @@ def get_user_skills_by_user_id(user_id: int, db: Session = Depends(get_db)):
         .outerjoin(Language, UserSkill.language_id == Language.id)
         .outerjoin(BackendTool, UserSkill.backend_tool_id == BackendTool.id)
         .outerjoin(FrontendTool, UserSkill.frontend_tool_id == FrontendTool.id)
+        .outerjoin(Database, UserSkill.database_id == Database.id)
         .first()
     )
 
@@ -62,6 +64,7 @@ def get_user_skills_by_user_id(user_id: int, db: Session = Depends(get_db)):
     be_results = [
         skill.backend_tool.name for skill in user.skills if skill.backend_tool
     ]
+    db_results = [skill.database.name for skill in user.skills if skill.database]
 
     return {
         "success": True,
@@ -75,6 +78,7 @@ def get_user_skills_by_user_id(user_id: int, db: Session = Depends(get_db)):
                 "languages": lang_results,
                 "frontend_tools": fe_results,
                 "backend_tools": be_results,
+                "database": db_results,
             },
         },
     }

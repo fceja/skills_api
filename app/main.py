@@ -3,6 +3,7 @@ import uvicorn
 
 from app.routes import (
     languages_routes,
+    database_routes,
     frontend_tools_routes,
     backend_tools_routes,
     user_skill_routes,
@@ -14,6 +15,7 @@ app = FastAPI()
 
 # add routes
 app.include_router(languages_routes.router, prefix="/languages", tags=["languages"])
+app.include_router(database_routes.router, prefix="/databases", tags=["databases"])
 app.include_router(
     backend_tools_routes.router, prefix="/backend-tools", tags=["backend-tools"]
 )

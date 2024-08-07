@@ -7,6 +7,7 @@ class UserSkillBase(BaseModel):
     language_id: int
     frontend_tool_id: Optional[int] = None
     backend_tool_id: Optional[int] = None
+    database_id: Optional[int] = None
 
 
 class UserSkillCreate(UserSkillBase):
