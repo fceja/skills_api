@@ -11,33 +11,38 @@ from app.schemas.user_schema import UserCreate
 
 def seed_data(db: Session):
     if db.query(User).count() == 0:
-        language1_data = UserCreate(name="fceja", email="fceja@email.com")
-        language1 = User(language1_data)
+        users = []
 
-        user2_data = UserCreate(name="jdoe", email="jdoe@email.com")
-        user2 = User(user2_data)
+        users_to_create = [
+            {"name": "fceja", "email": "fceja.dev@email.com"},
+            {"name": "jdoe", "email": "jdoe@email.com"},
+        ]
 
-        db.add_all([language1, user2])
+        for user in users_to_create:
+            user_data = UserCreate(name=user["name"], email=user["email"])
+            users.append(User(user_data))
+
+        db.add_all(users)
         db.commit()
 
     if db.query(Language).count() == 0:
-        language1_data = LanguageCreate(name="javascript")
-        language1 = Language(language1_data)
-        language2_data = LanguageCreate(name="typescript")
-        language2 = Language(language2_data)
-        language3_data = LanguageCreate(name="python")
-        language3 = Language(language3_data)
+        languages = []
 
-        db.add_all([language1, language2, language3])
+        for user in ["javascript", "typescript", "python", "go"]:
+            lang_data = LanguageCreate(name=user)
+            lang = Language(lang_data)
+            languages.append(lang)
+
+        db.add_all(languages)
         db.commit()
 
     if db.query(FrontendTool).count() == 0:
-        tool1_data = FrontendToolCreate(name="react")
-        tool1 = FrontendTool(tool1_data)
-        tool2_data = FrontendToolCreate(name="redux")
-        tool2 = FrontendTool(tool2_data)
-        tool3_data = FrontendToolCreate(name="fastapi")
-        tool3 = FrontendTool(tool3_data)
+        frontend_tools = []
 
-        db.add_all([tool1, tool2, tool3])
+        for user in ["react", "redux", "fastapi"]:
+            fe_tool_data = FrontendToolCreate(name=user)
+            fe_tool = FrontendTool(fe_tool_data)
+            frontend_tools.append(fe_tool)
+
+        db.add_all(frontend_tools)
         db.commit()
