@@ -3,6 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 from app.models import (
     backend_tools_model,
+    cloud_model,
     database_model,
     frontend_tools_model,
     language_model,

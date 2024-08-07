@@ -8,6 +8,7 @@ class UserSkillBase(BaseModel):
     frontend_tool_id: Optional[int] = None
     backend_tool_id: Optional[int] = None
     database_id: Optional[int] = None
+    cloud_id: Optional[int] = None
 
 
 class UserSkillCreate(UserSkillBase):

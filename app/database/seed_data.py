@@ -2,12 +2,14 @@ from sqlalchemy.orm import Session
 
 from app.models.backend_tools_model import BackendTool
 from app.models.frontend_tools_model import FrontendTool
+from app.models.cloud_model import Cloud
 from app.models.database_model import Database
 from app.models.language_model import Language
 from app.models.user_model import User
 from app.models.user_skill_model import UserSkill
 from app.schemas.backend_tool_schema import BackendToolCreate
 from app.schemas.frontend_tool_schema import FrontendToolCreate
+from app.schemas.cloud_schema import CloudCreate
 from app.schemas.database_schema import DatabaseCreate
 from app.schemas.language_schema import LanguageCreate
 from app.schemas.user_schema import UserCreate
@@ -74,8 +76,20 @@ def seed_data(db: Session):
         db.add_all(databases)
         db.commit()
 
+    if db.query(Cloud).count() == 0:
+        clouds = []
+
+        for cloud_item in ["aws"]:
+            cloud_data = CloudCreate(name=cloud_item)
+            cloud = Cloud(cloud_data)
+            clouds.append(cloud)
+
+        db.add_all(clouds)
+        db.commit()
+
     skills_data = {
         "user_id": 1,
+        "cloud_id": 1,
         "language_id": 1,
         "database_id": 1,
         "backend_tool_id": 1,
@@ -85,6 +99,7 @@ def seed_data(db: Session):
     db_skills = UserSkillCreate(
         user_id=skills_data["user_id"],
         language_id=skills_data["language_id"],
+        cloud_id=skills_data["cloud_id"],
         database_id=skills_data["database_id"],
         backend_tool_id=skills_data["backend_tool_id"],
         frontend_tool_id=skills_data["frontend_tool_id"],
